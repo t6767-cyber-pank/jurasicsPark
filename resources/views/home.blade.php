@@ -386,11 +386,11 @@
                                     <tbody>
                                     <tr v-for="animal in animals">
                                         <td v-html="animal.name"></td>
-                                        <td v-html="animal.nameview"></td>
-                                        <td v-html="animal.namecat"></td>
+                                        <td v-html="animal.view.name"></td>
+                                        <td v-html="animal.category.name"></td>
                                         <td>
                                             <a href="#"
-                                               v-on:click="getModal(1, animal.name, animal.description, animal.nameview, animal.namecat, animal.id_category, animal.id_wiew)"
+                                               v-on:click="getModal(1, animal.name, animal.description, animal.view.name, animal.category.name, animal.id_category, animal.id_wiew)"
                                                class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
                                             <a href="#"
                                                v-on:click="getModalEdit(1, animal.name, animal.description, animal.id_category, animal.id_wiew, animal.id)"
@@ -455,9 +455,9 @@
 
         },
         mounted() {
-            axios.get( '/Animal' ).then( response => ( this.animals = response.data ) );
-            axios.get( '/AnimalView' ).then( response => ( this.animalsViews = response.data ) );
-            axios.get( '/AnimalCategory' ).then( response => ( this.animalsCategories = response.data ) );
+            axios.get( '/animal' ).then( response => ( this.animals = response.data ) );
+            axios.get( '/animal_view' ).then( response => ( this.animalsViews = response.data ) );
+            axios.get( '/animal_category' ).then( response => ( this.animalsCategories = response.data ) );
         },
         methods: {
             getModal: function ( x, xTitle, xDescription, vid, cat, catSlug, vidSlug ) {
@@ -489,7 +489,7 @@
                 this.conditionEdit = 0;
                 this.conditionNew = 0;
                 this.condition = 0;
-                axios.put( "/Animal/" + id, {
+                axios.put( "/animal/" + id, {
                     'name': xTitle,
                     'description': xDescription,
                     'id_category': catSlug,
@@ -507,7 +507,7 @@
                 this.conditionEdit = 0;
                 this.condition = 0;
                 this.conditionNew = 0;
-                axios.post( '/Animal/' + id, { _method: 'delete' } )
+                axios.post( '/animal/' + id, { _method: 'delete' } )
                      .then( ( response ) => {
                          console.log( response.data );
                          this.animals = response.data;
@@ -524,7 +524,7 @@
                 this.conditionEdit = 0;
                 this.conditionNew = 0;
                 this.condition = 0;
-                axios.post( '/Animal', {
+                axios.post( '/animal', {
                     'name': xTitle,
                     'description': xDescription,
                     'id_category': catSlug,

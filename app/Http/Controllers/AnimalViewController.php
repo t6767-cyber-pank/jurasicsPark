@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\animal;
-use App\animal_view;
+use App\Animal\AnimalClass;
+use App\AnimalView;
 use Illuminate\Http\Request;
 
 class AnimalViewController extends Controller
@@ -13,8 +14,7 @@ class AnimalViewController extends Controller
      */
     public function index()
     {
-        $animalView = animal_view::all()->toJson();
-        return $animalView;
+        return AnimalView::all()->toJson();
     }
 
 
@@ -47,12 +47,12 @@ class AnimalViewController extends Controller
      */
     public function show( $id )
     {
-        if( $id == 0 ) {
-            $Animals = animal::selAll()->get();
+        $Animals = new AnimalClass();
+        if( (int)$id !== 0 ) {
+            return $Animals->selectAllRecords()->where( "id_wiew", $id )->get()->toJson();
         } else {
-            $Animals = animal::selAll()->where( "id_wiew", $id )->get();
+            return $Animals->selectAllRecords()->get()->toJson();
         }
-        return $Animals;
     }
 
 

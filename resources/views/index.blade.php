@@ -83,9 +83,9 @@
                 <button v-on:click="getModal(1, animal.name, animal.description)"
                         style="width: 100%; margin-bottom: 10px;"> Подробнее
                 </button>
-                <button v-on:click="getAnimalsCat(animal.id_category)"
-                        v-html="'Категория: '+animal.namecat"></button>
-                <button v-on:click="getAnimals(animal.id_wiew)" v-html="'Вид: '+animal.nameview"></button>
+                <button v-on:click="getAnimalsCat(animal.category.id)"
+                        v-html="'Категория: '+animal.category.name"></button>
+                <button v-on:click="getAnimals(animal.view.id)" v-html="'Вид: '+animal.view.name"></button>
             </div>
         </div>
     </div>
@@ -117,16 +117,16 @@
             xDescription: 'v'
         },
         mounted() {
-            axios.get( '/Animal' ).then( response => ( this.animals = response.data ) );
-            axios.get( '/AnimalView' ).then( response => ( this.animalsViews = response.data ) );
-            axios.get( '/AnimalCategory' ).then( response => ( this.animalsCategories = response.data ) );
+            axios.get( '/animal' ).then( response => ( this.animals = response.data ) );
+            axios.get( '/animal_view' ).then( response => ( this.animalsViews = response.data ) );
+            axios.get( '/animal_category' ).then( response => ( this.animalsCategories = response.data ) );
         },
         methods: {
             getAnimals: function ( id ) {
-                axios.get( '/AnimalView/' + id ).then( response => ( this.animals = response.data ) );
+                axios.get( '/animal_view/' + id ).then( response => ( this.animals = response.data ) );
             },
             getAnimalsCat: function ( id ) {
-                axios.get( '/AnimalCategory/' + id ).then( response => ( this.animals = response.data ) );
+                axios.get( '/animal_category/' + id ).then( response => ( this.animals = response.data ) );
             },
             getModal: function ( x, xTitle, xDescription ) {
                 this.condition = x;

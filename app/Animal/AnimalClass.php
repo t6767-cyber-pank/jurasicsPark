@@ -1,21 +1,19 @@
 <?php
 namespace App\Animal;
 
+use App\Animal;
 use Illuminate\Http\Request;
 
 class AnimalClass
 {
-    public $request;
 
-
-    public function __construct( Request $request )
+    public function selectAllRecords()
     {
-        $request->validate( [
-                                'name'        => 'required',
-                                'description' => 'required',
-                            ] );
+        return Animal::with( 'category' )->with( 'view' );
+    }
 
-        $this->request = $request;
+    public function __construct()
+    {
     }
 }
 

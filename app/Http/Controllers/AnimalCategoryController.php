@@ -2,49 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\animal;
-use App\animal_category;
+use App\Animal;
+use App\AnimalCategory;
+use App\Animal\AnimalClass;
 use Illuminate\Http\Request;
 
 class AnimalCategoryController extends Controller
 {
-    /*
-    Все категории
-    */
+    /**
+     * @return string
+     */
     public function index()
     {
-        $animalCategory = animal_category::all()->toJson();
-        return $animalCategory;
+        return AnimalCategory::all()->toJson();
     }
 
 
-    /*
-    */
+    /**
+     *
+     */
     public function create()
     {
         //
     }
 
 
-    /*
-    */
+    /**
+     * @param Request $request
+     */
     public function store( Request $request )
     {
         //
     }
 
 
-    /*
-     Вместо поиска категории по короткому имени идет поиск записей этой категории
-    */
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function show( $id )
     {
-        if( $id == 0 ) {
-            $Animals = animal::selAll()->get();
+        $animals = new AnimalClass();
+        if( (int)$id !== 0 ) {
+            return $animals->selectAllRecords()->where( "id_category", $id )->get()->toJson();
         } else {
-            $Animals = animal::selAll()->where( "id_category", $id )->get()->toJson();
+            return $animals->selectAllRecords()->get()->toJson();
         }
-        return $Animals;
     }
 
 

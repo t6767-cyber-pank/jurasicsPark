@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\AnimalCategory;
+use App\AnimalView;
 
 class animal extends Model
 {
@@ -11,18 +13,15 @@ class animal extends Model
     ];
 
 
-    public static function selAll()
+    public function category()
     {
-        $an = new animal();
-        return $an::select(
-            'animals.name',
-            'animals.id',
-            'animals.description',
-            'animal_views.name as nameview',
-            'animal_categories.name as namecat',
-            'animals.id_category',
-            'animals.id_wiew' )
-                  ->join( 'animal_categories', 'animals.id_category', '=', 'animal_categories.id' )
-                  ->join( 'animal_views', 'animals.id_wiew', '=', 'animal_views.id' );
+        return $this->hasOne( AnimalCategory::class, "id", "id_category" );
     }
+
+
+    public function view()
+    {
+        return $this->hasOne( AnimalView::class, "id", "id_wiew" );
+    }
+
 }

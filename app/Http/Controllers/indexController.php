@@ -9,7 +9,9 @@ use App\animal_category;
 
 class indexController extends Controller
 {
-    // индексная страница
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view( 'index', [] );

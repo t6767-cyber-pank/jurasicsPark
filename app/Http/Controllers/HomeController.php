@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\animal;
 use Illuminate\Http\Request;
-use function MongoDB\BSON\toJSON;
 
 class HomeController extends Controller
 {
@@ -15,6 +14,9 @@ class HomeController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view( 'home' );

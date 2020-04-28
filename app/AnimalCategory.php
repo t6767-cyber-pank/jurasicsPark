@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class animal_view extends Model
+class AnimalCategory extends Model
 {
     //
 }

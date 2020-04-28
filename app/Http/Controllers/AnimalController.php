@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\animal;
+use App\Animal;
 use App\Animal\AnimalClass;
+use App\Http\Requests\AnimalRequest;
 use Illuminate\Http\Request;
 
 class AnimalController extends Controller
 {
     /**
-     * Вывод всех животных
+     * @return mixed
      */
     public function index()
     {
-        return animal::selAll()->get();
+        $animals = new AnimalClass();
+        return $animals->selectAllRecords()->get()->toJson();
     }
 
 
     /**
-     * В этой ситуации не нужен
+     *
      */
     public function create()
     {
@@ -26,17 +28,19 @@ class AnimalController extends Controller
 
 
     /**
+     * @param Request $request
+     *
+     * @return mixed\
      */
-    public function store( Request $request )
+    public function store( AnimalRequest $request )
     {
-        $animalRequest = new AnimalClass( $request );
-        animal::create( $animalRequest->request->all() );
+        Animal::create( $request->all() );
         return $this->index();
     }
 
 
     /**
-     * В этой ситуации не нужен пока
+     * @param $id
      */
     public function show( $id )
     {
@@ -44,7 +48,7 @@ class AnimalController extends Controller
 
 
     /**
-     * В этой ситуации не нужен пока
+     * @param $id
      */
     public function edit( $id )
     {
@@ -52,24 +56,26 @@ class AnimalController extends Controller
 
 
     /**
-     * Изменение животного. (Странно но возможно. Всяко бывает Считали пингвином оказался заяц)
+     * @param Request $request
+     * @param         $id
+     *
+     * @return mixed
      */
-    public function update( Request $request, $id )
+    public function update( AnimalRequest $request, $id )
     {
-        $animal        = animal::find( $id );
-        $animalRequest = new AnimalClass( $request );
-        $animal->update( $animalRequest->request->all() );
+        Animal::find( $id )->update( $request->all() );
         return $this->index();
     }
 
 
     /**
-     * Удаление животного
+     * @param $id
+     *
+     * @return mixed
      */
     public function destroy( $id )
     {
-        $animal = animal::find( $id );
-        $animal->delete();
+        Animal::find( $id )->delete();
         return $this->index();
     }
 }
